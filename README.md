@@ -34,12 +34,13 @@
 ### Clone the Repository:
 
 ```
-git clone https://github.com/yourusername/contact-management-app.git
+git clone https://github.com/canaalex/tayo.git
+
 ```
 ### Navigate to the Project Directory:
 
 ```
-cd contact-management-app
+cd tayo
 ```
 
 ### Install Dependencies:
