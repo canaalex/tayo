@@ -6,6 +6,9 @@
   height: 40vmin;
   pointer-events: none;
 }
+.sidebar-height {
+  height: calc(100vh - 65px);
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
