@@ -22,8 +22,10 @@ const fetchCovidData = async () => {
 };
 
 const CovidChart: React.FC = () => {
-  const { data, isLoading, error } = useQuery({  queryKey: ["covidData"],
-    queryFn: fetchCovidData,});
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["covidData"],
+    queryFn: fetchCovidData,
+  });
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error fetching data</div>;
@@ -71,10 +73,10 @@ const CovidChart: React.FC = () => {
   };
 
   return (
-    <div className="chart-container">
-        <Line data={chartData} options={options} />;
+    <div className="w-full h-full max-w-full max-h-full p-4 md:h-chart-height">
+      <Line data={chartData} options={options} />
     </div>
-  )
+  );
 };
 
 export default CovidChart;

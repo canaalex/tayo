@@ -4,6 +4,7 @@ import { addContact, editContact,deleteContact} from "../features/contacts/conta
 import { selectContacts } from "../features/contacts/selectors";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
+import NoContact from "../components/nocontact";
 function Contactpage() {
   type Contact = {
     firstName: string;
@@ -39,7 +40,6 @@ function Contactpage() {
         status: formData.status,
       };
       dispatch(addContact(newContact));
-      console.log('Form data submitted:', formData);
       setFormOpen(false);
     } else if (editContactForm) {
       const editedContact = {
@@ -49,7 +49,6 @@ function Contactpage() {
         status: formData.status,
       };
       dispatch(editContact(editedContact));
-      console.log('Contact updated:', editedContact);
       setFormOpen(false);
       setPageStatus('add');
     } else {
@@ -95,8 +94,9 @@ function Contactpage() {
           </button>
         </div>
       )}
-      {!isFormOpen && contacts.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+     <div className="mx-5">
+  {!isFormOpen && contacts.length > 0 ? (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {contacts.map((contact) => (
         <div
           key={contact.id}
@@ -119,13 +119,22 @@ function Contactpage() {
           </div>
 
           <div className="flex justify-between items-center">
-            <MdEdit onClick={()=>handleEditContact(contact)} className="text-gray-600 cursor-pointer hover:text-gray-800 transition duration-200" />
-            <MdDelete onClick={()=>handleDeleteContact(contact)}className="text-gray-600 cursor-pointer hover:text-gray-800 transition duration-200" />
+            <MdEdit
+              onClick={() => handleEditContact(contact)}
+              className="text-gray-600 cursor-pointer hover:text-gray-800 transition duration-200"
+            />
+            <MdDelete
+              onClick={() => handleDeleteContact(contact)}
+              className="text-gray-600 cursor-pointer hover:text-gray-800 transition duration-200"
+            />
           </div>
         </div>
       ))}
     </div>
-      )}
+  ) : (
+    !isFormOpen && <NoContact />
+  )}
+</div>
 
       {isFormOpen && (
         <form

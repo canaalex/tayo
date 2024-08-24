@@ -43,7 +43,7 @@ const CovidMap: React.FC = () => {
     <MapContainer
       center={[20, 0]}
       zoom={2}
-      style={{ height: "350px", width: "100%" }}
+      style={{ height: "375px", width: "100%" }}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
