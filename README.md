@@ -24,4 +24,35 @@
 ### Chart.js: JavaScript library for creating charts.
 ### Axios: Promise-based HTTP client for making requests.
 
+# APIs Used
+
+## World Wide Data of Cases: [COVID-19 World Data](https://disease.sh/v3/covid-19/all)
+## Graph Data for Cases with Date: [COVID-19 Historical Data](https://disease.sh/v3/covid-19/historical/all?lastdays=all)
+
+# Getting Started
+
+### Clone the Repository:
+
+```
+git clone https://github.com/yourusername/contact-management-app.git
+```
+### Navigate to the Project Directory:
+
+```
+cd contact-management-app
+```
+
+### Install Dependencies:
+
+```
+npm install
+```
+
+### Run the Application:
+
+```
+npm start
+```
+### Open http://localhost:3000 in your browser.
+
 
