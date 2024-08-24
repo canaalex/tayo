@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addContact, editContact,deleteContact} from "../features/contacts/contactSlice";
+import {
+  addContact,
+  editContact,
+  deleteContact,
+} from "../features/contacts/contactSlice";
 import { selectContacts } from "../features/contacts/selectors";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
@@ -10,18 +14,19 @@ function Contactpage() {
     firstName: string;
     lastName: string;
     status: string;
-    id:number;
+    id: number;
   };
+  const [pageStatus, setPageStatus] = useState("add");
+  const [isFormOpen, setFormOpen] = useState(false);
+  const [editContactForm, setEditContactForm] = useState<Contact | null>(null);
+  const dispatch = useDispatch();
+  const contacts = useSelector(selectContacts);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     status: "active", // Default status
   });
-  const [pageStatus,setPageStatus]=useState('add');
-  const [isFormOpen, setFormOpen] = useState(false);
-  const [editContactForm, setEditContactForm] = useState<Contact | null>(null);
-  const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
+
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormData({
@@ -32,7 +37,7 @@ function Contactpage() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    if (pageStatus === 'add') {
+    if (pageStatus === "add") {
       const newContact = {
         id: Date.now(), // Generate a unique ID
         firstName: formData.firstName,
@@ -50,38 +55,41 @@ function Contactpage() {
       };
       dispatch(editContact(editedContact));
       setFormOpen(false);
-      setPageStatus('add');
+      setPageStatus("add");
     } else {
-      console.error('No contact selected for editing.');
+      console.error("No contact selected for editing.");
     }
-   
   };
+
   function handleCreateContactOnClick() {
     setFormOpen(true);
   }
-  function handleEditContact(contact:Contact){
-    setPageStatus('edit');
+
+  function handleEditContact(contact: Contact) {
+    setPageStatus("edit");
     setFormOpen(true);
-   setFormData({
-    firstName:contact.firstName,
-    lastName:contact.lastName,
-    status:contact.status
-   });
-   setEditContactForm(contact);
+    setFormData({
+      firstName: contact.firstName,
+      lastName: contact.lastName,
+      status: contact.status,
+    });
+    setEditContactForm(contact);
   }
-  function handleDeleteContact(contact:Contact){
-    dispatch(deleteContact(contact))
+
+  function handleDeleteContact(contact: Contact) {
+    dispatch(deleteContact(contact));
   }
-  useEffect(()=>{
-    if(pageStatus==='add'){
-      setFormData({  firstName: "",
+
+  useEffect(() => {
+    if (pageStatus === "add") {
+      setFormData({
+        firstName: "",
         lastName: "",
         status: "active", // Default status
-  
       });
     }
-   
-  },[isFormOpen])
+  }, [isFormOpen]);
+
   return (
     <div className="flex flex-col justify-center mt-10">
       {!isFormOpen && (
@@ -94,47 +102,50 @@ function Contactpage() {
           </button>
         </div>
       )}
-     <div className="mx-5">
-  {!isFormOpen && contacts.length > 0 ? (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {contacts.map((contact) => (
-        <div
-          key={contact.id}
-          className="p-4 bg-white rounded-lg shadow-md flex flex-col justify-between"
-        >
-          <div className="flex flex-col flex-grow">
-            <h3 className="text-lg font-semibold mb-2">
-              {contact.firstName} {contact.lastName}
-            </h3>
-            <p className="mb-4">
-              Status:{" "}
-              <span
-                className={`font-semibold ${
-                  contact.status === "active" ? "text-green-600" : "text-red-600"
-                }`}
+      <div className="mx-5">
+        {!isFormOpen && contacts.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {contacts.map((contact) => (
+              <div
+                key={contact.id}
+                className="p-4 bg-white rounded-lg shadow-md flex flex-col justify-between"
               >
-                {contact.status.charAt(0).toUpperCase() + contact.status.slice(1)}
-              </span>
-            </p>
-          </div>
+                <div className="flex flex-col flex-grow">
+                  <h3 className="text-lg font-semibold mb-2">
+                    {contact.firstName} {contact.lastName}
+                  </h3>
+                  <p className="mb-4">
+                    Status:{" "}
+                    <span
+                      className={`font-semibold ${
+                        contact.status === "active"
+                          ? "text-green-600"
+                          : "text-red-600"
+                      }`}
+                    >
+                      {contact.status.charAt(0).toUpperCase() +
+                        contact.status.slice(1)}
+                    </span>
+                  </p>
+                </div>
 
-          <div className="flex justify-between items-center">
-            <MdEdit
-              onClick={() => handleEditContact(contact)}
-              className="text-gray-600 cursor-pointer hover:text-gray-800 transition duration-200"
-            />
-            <MdDelete
-              onClick={() => handleDeleteContact(contact)}
-              className="text-gray-600 cursor-pointer hover:text-gray-800 transition duration-200"
-            />
+                <div className="flex justify-between items-center">
+                  <MdEdit
+                    onClick={() => handleEditContact(contact)}
+                    className="text-gray-600 cursor-pointer hover:text-gray-800 transition duration-200"
+                  />
+                  <MdDelete
+                    onClick={() => handleDeleteContact(contact)}
+                    className="text-gray-600 cursor-pointer hover:text-gray-800 transition duration-200"
+                  />
+                </div>
+              </div>
+            ))}
           </div>
-        </div>
-      ))}
-    </div>
-  ) : (
-    !isFormOpen && <NoContact />
-  )}
-</div>
+        ) : (
+          !isFormOpen && <NoContact />
+        )}
+      </div>
 
       {isFormOpen && (
         <form

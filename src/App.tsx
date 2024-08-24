@@ -15,7 +15,8 @@ import Header from "../src/components/header";
 function App() {
   const queryClient = new QueryClient();
   const [heading, setHeading] = useState("Contact");
-  const RouteChangeHandler = () => {
+  
+  const RouteChangeHandler = () => { // for setting the name of the header
     const location = useLocation();
 
     useEffect(() => {
