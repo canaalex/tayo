@@ -9,6 +9,10 @@
 .sidebar-height {
   height: calc(100vh - 65px);
 }
+.chart-container {
+  width: 100%;
+  height: 300px;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

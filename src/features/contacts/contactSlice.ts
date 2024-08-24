@@ -5,7 +5,7 @@ interface Contact {
   id: number;
   firstName: string;
   lastName: string;
-  status: 'active' | 'inactive';
+  status: string;
 }
 interface ContactState {
   contacts: Contact[];
@@ -22,14 +22,22 @@ export const contactsSlice = createSlice({
     addContact: (state,action) => {
       state.contacts.push(action.payload);
     },
-    deleteContact: (state, action: PayloadAction<number>) => {
-      state.contacts = state.contacts.filter(contact => contact.id !== action.payload);
+    deleteContact: (state, action: PayloadAction<Contact>) => {
+      const {id}=action.payload;
+      state.contacts = state.contacts.filter(contact => contact.id !== id);
+    },
+    editContact: (state, action: PayloadAction<Contact>) => {
+      const { id, firstName, lastName, status } = action.payload;
+      const index = state.contacts.findIndex(contact => contact.id === id);
+      if (index !== -1) {
+        state.contacts[index] = { id, firstName, lastName, status };
+      }
     },
     
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { addContact } = contactsSlice.actions
+export const { addContact,editContact,deleteContact } = contactsSlice.actions
 
 export default contactsSlice.reducer
