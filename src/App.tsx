@@ -9,13 +9,14 @@ import {
   Routes,
   Link,
   useLocation,
+  Navigate,
 } from "react-router-dom";
 import Header from "../src/components/header";
 
 function App() {
   const queryClient = new QueryClient();
   const [heading, setHeading] = useState("Contact");
-  
+
   const RouteChangeHandler = () => { // for setting the name of the header
     const location = useLocation();
 
@@ -54,6 +55,7 @@ function App() {
             </aside>
             <div className="w-full md:w-4/5">
               <Routes>
+              <Route path="/" element={<Navigate to="/contact" />} />
                 <Route path="/contact" element={<Contactpage />} />
                 <Route path="/charts" element={<Chartspage />} />
               </Routes>
